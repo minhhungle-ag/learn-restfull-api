@@ -1,0 +1,67 @@
+[
+  {
+    "id": "ae1b156a-6535-4c31-a9ec-57dd23f56c01",
+    "name": "Doremon tap 8",
+    "price": 20000
+  },
+  {
+    "id": "eae70f9d-b76c-4840-9ddf-ecd7c4247048",
+    "name": "Doremon tap 7",
+    "price": 20000
+  },
+  {
+    "id": "2fc53ffe-5829-426c-80de-4c8452a778f7",
+    "name": "Doremon tap 6",
+    "price": 20000
+  },
+  {
+    "id": "38464aea-dfd2-4b9e-8a5e-41f84f4a96bc",
+    "name": "Doremon tap 5",
+    "price": 20000
+  },
+  {
+    "id": "f3678200-ada8-414b-b137-c9c6262d0468",
+    "name": "Doremon tap 4",
+    "price": 20000
+  },
+  {
+    "id": "8a57503e-c321-4585-9994-a549c35ec345",
+    "name": "Doremon tap 3",
+    "price": 20000
+  },
+  {
+    "id": "c036530e-7022-46bb-afd9-082cbe2751b3",
+    "name": "Doremon tap 2",
+    "price": 20000
+  },
+  {
+    "id": "600aacba-0719-4803-b5e5-4fd0c10ce70c",
+    "name": "Doremon tap 1",
+    "price": 20000
+  },
+  {
+    "id": "a882d445-6796-4781-9c89-176042bc72de",
+    "name": "Sách nói củ giá rẻ",
+    "price": 20000
+  },
+  {
+    "id": "d97ee107-1deb-4e8b-9f45-70fe974de59c",
+    "name": "Sách nói mới",
+    "price": 20000
+  },
+  {
+    "id": "4844be09-9f6d-496d-a001-4485f5507820",
+    "name": "Sách hay",
+    "price": 1556
+  },
+  {
+    "id": "a4e126aa-6aeb-428c-a716-5a32e7724759",
+    "name": "Hary Porter",
+    "price": 15
+  },
+  {
+    "id": "4b0d9d55-cd49-4f83-83db-5e90e3514ca9",
+    "name": "Sách nói",
+    "price": 20000
+  }
+]
