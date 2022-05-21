@@ -1,107 +1,103 @@
-const express = require('express');
-const productList = require('../data/product.json');
+const express = require('express')
+const productList = require('../data/product.json')
 
-const fs = require('fs');
-const router = express.Router();
+const fs = require('fs')
+const router = express.Router()
 
-const { v4 } = require('uuid');
-const uuid = v4;
+const { v4 } = require('uuid')
+const uuid = v4
 
-const limit = 5;
-const page = 1;
+const limit = 5
+const page = 1
 
 function writeToFile(newProductList) {
-  try {
-    fs.writeFileSync(
-      './data/product.json',
-      JSON.stringify(newProductList),
-      () => console.log('write file success')
-    );
-    res.status(200).json('OK');
-  } catch (error) {
-    console.log({ error });
-  }
+	try {
+		fs.writeFileSync('./data/product.json', JSON.stringify(newProductList), () =>
+			console.log('write file success')
+		)
+		res.status(200).json('OK')
+	} catch (error) {
+		console.log({ error })
+	}
 }
 
 // get all
 router.get('/', (req, res) => {
-  if (req.query.page <= 0) {
-    res.status(500).json('what do you want');
-  }
+	if (req.query.page <= 0) {
+		res.status(500).json('what do you want')
+	}
 
-  const startIdx = ((req.query.page || page) - 1) * (req.query.limit || limit);
-  const newProductList = [...productList];
-  const total = newProductList.length;
-  const totalPage = Math.ceil(
-    newProductList.length / (req.query.limit || limit)
-  );
+	const startIdx = ((req.query.page || page) - 1) * (req.query.limit || limit)
+	const newProductList = [...productList]
+	const total = newProductList.length
+	const totalPage = Math.ceil(newProductList.length / (req.query.limit || limit))
 
-  res.status(200).json({
-    pagination: {
-      page: req.query.page || page,
-      limit: req.query.limit || limit,
-      total: total,
-      total_page: totalPage,
-    },
-    data: newProductList.splice(startIdx, req.query.limit || limit),
-  });
-});
+	res.status(200).json({
+		pagination: {
+			page: req.query.page || page,
+			limit: req.query.limit || limit,
+			total: total,
+			total_page: totalPage,
+		},
+		data: newProductList.splice(startIdx, req.query.limit || limit),
+	})
+})
 
 //get by id
 router.get('/:id', (req, res) => {
-  const id = req.param('id');
-  const newProductList = [...productList];
-  const newProduct = newProductList.find((item) => item.id === id);
+	const id = req.param('id')
+	const newProductList = [...productList]
+	const newProduct = newProductList.find((item) => item.id === id)
 
-  res.status(200).json(newProduct);
-});
+	res.status(200).json(newProduct)
+})
 
 // add product
 router.post('/', (req, res) => {
-  const product = {
-    id: `${uuid()}`,
-    name: req.body.name,
-    price: req.body.price,
-    description: req.body.description,
-    color: req.body.color,
-  };
+	const product = {
+		id: `${uuid()}`,
+		name: req.body.name,
+		price: req.body.price,
+		description: req.body.description,
+		color: req.body.color,
+	}
 
-  const newProductList = [product, ...productList];
+	const newProductList = [product, ...productList]
 
-  writeToFile(newProductList);
+	writeToFile(newProductList)
 
-  res.status(200).json(product);
-});
+	res.status(200).json(product)
+})
 
 // update product
 router.put('/:id', (req, res) => {
-  const id = req.param('id');
-  const newProductList = [...productList];
-  const idx = newProductList.findIndex((item) => item.id === id);
+	const id = req.param('id')
+	const newProductList = [...productList]
+	const idx = newProductList.findIndex((item) => item.id === id)
 
-  newProductList[idx] = {
-    id: newProductList[idx].id,
-    name: req.body.name,
-    price: req.body.price,
-    description: req.body.description,
-    color: req.body.color,
-  };
+	newProductList[idx] = {
+		id: newProductList[idx].id,
+		name: req.body.name,
+		price: req.body.price,
+		description: req.body.description,
+		color: req.body.color,
+	}
 
-  writeToFile(newProductList);
+	writeToFile(newProductList)
 
-  res.status(200).json(newProductList[idx]);
-});
+	res.status(200).json(newProductList[idx])
+})
 
 router.delete('/:id', (req, res) => {
-  const id = req.param('id');
-  const newProductList = [...productList];
-  const idx = newProductList.findIndex((item) => item.id === id);
+	const id = req.param('id')
+	const newProductList = [...productList]
+	const idx = newProductList.findIndex((item) => item.id === id)
 
-  newProductList.splice(idx, 1);
+	newProductList.splice(idx, 1)
 
-  writeToFile(newProductList);
+	writeToFile(newProductList)
 
-  res.status(200).json(`Deleted ${id}`);
-});
+	res.status(200).json(`Deleted ${id}`)
+})
 
-module.exports = router;
+module.exports = router
