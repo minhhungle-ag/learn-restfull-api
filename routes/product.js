@@ -1,5 +1,7 @@
 const express = require('express')
+const multer = require('multer')
 const productList = require('../data/product.json')
+const sharp = require('sharp')
 
 const fs = require('fs')
 const router = express.Router()
@@ -20,6 +22,18 @@ function writeToFile(newProductList) {
 		console.log({ error })
 	}
 }
+
+const upload = multer({
+	limits: {
+		fileSize: 1000000,
+	},
+	fileFilter(req, file, cb) {
+		if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+			return cb(new Error('Please upload a valid image file'))
+		}
+		cb(undefined, true)
+	},
+})
 
 // get all
 router.get('/', (req, res) => {
@@ -54,6 +68,7 @@ router.get('/:id', (req, res) => {
 
 // add product
 router.post('/', (req, res) => {
+	// get product
 	const product = {
 		id: `${uuid()}`,
 		name: req.body.name,
@@ -98,6 +113,17 @@ router.delete('/:id', (req, res) => {
 	writeToFile(newProductList)
 
 	res.status(200).json(`Deleted ${id}`)
+})
+
+// upload image
+router.post('/image', upload.single('upload'), async (req, res) => {
+	try {
+		await sharp(req.file.buffer).toFile(__dirname + `../uploads/${req.file.originalname}`)
+		res.status(201).send('Image uploaded succesfully')
+	} catch (error) {
+		console.log(error)
+		res.status(400).send(error)
+	}
 })
 
 module.exports = router

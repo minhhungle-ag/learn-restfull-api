@@ -1,1 +1,10 @@
-[{"id":"d03a7471-5dca-4186-b6af-7ecfe547d06b","name":"Xe đạp nam","price":200,"description":"I am a product description. This is a great place to sell your product and grab buyers' attention. Describe your product clearly and concisely. Use unique keywords. Write your own description instead of using manufacturers' copy.","color":"red"}]
+[
+	{
+		"id": "d03a7471-5dca-4186-b6af-7ecfe547d06b",
+		"name": "Xe đạp nam",
+		"price": 200,
+		"description": "I am a product description. This is a great place to sell your product and grab buyers' attention. Describe your product clearly and concisely. Use unique keywords. Write your own description instead of using manufacturers' copy.",
+		"color": "red",
+        "image": "72ae862ebc6b50cc1469ab54733cea9d.jpg"
+	}
+]
