@@ -1,19 +1,32 @@
-const express = require("express");
-const productList = require("../data/product.json");
+const express = require('express');
+const productList = require('../data/product.json');
 
-const fs = require("fs");
+const fs = require('fs');
 const router = express.Router();
 
-const { v4 } = require("uuid");
+const { v4 } = require('uuid');
 const uuid = v4;
 
 const limit = 5;
 const page = 1;
 
+function writeToFile(newProductList) {
+  try {
+    fs.writeFileSync(
+      './data/product.json',
+      JSON.stringify(newProductList),
+      () => console.log('write file success')
+    );
+    res.status(200).json('OK');
+  } catch (error) {
+    console.log({ error });
+  }
+}
+
 // get all
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   if (req.query.page <= 0) {
-    res.status(500).json("what do you want");
+    res.status(500).json('what do you want');
   }
 
   const startIdx = ((req.query.page || page) - 1) * (req.query.limit || limit);
@@ -35,8 +48,8 @@ router.get("/", (req, res) => {
 });
 
 //get by id
-router.get("/:id", (req, res) => {
-  const id = req.param("id");
+router.get('/:id', (req, res) => {
+  const id = req.param('id');
   const newProductList = [...productList];
   const newProduct = newProductList.find((item) => item.id === id);
 
@@ -44,57 +57,51 @@ router.get("/:id", (req, res) => {
 });
 
 // add product
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   const product = {
     id: `${uuid()}`,
     name: req.body.name,
     price: req.body.price,
+    description: req.body.description,
+    color: req.body.color,
   };
 
   const newProductList = [product, ...productList];
 
-  fs.writeFileSync("./data/product.json", JSON.stringify(newProductList), () =>
-    console.log("write file success")
-  );
+  writeToFile(newProductList);
 
   res.status(200).json(product);
 });
 
 // update product
-router.put("/:id", (req, res) => {
-  const id = req.param("id");
+router.put('/:id', (req, res) => {
+  const id = req.param('id');
   const newProductList = [...productList];
   const idx = newProductList.findIndex((item) => item.id === id);
 
-  newProductList[idx].name = req.body.name;
-  newProductList[idx].price = req.body.price;
+  newProductList[idx] = {
+    id: newProductList[idx].id,
+    name: req.body.name,
+    price: req.body.price,
+    description: req.body.description,
+    color: req.body.color,
+  };
 
-  fs.writeFileSync("./data/product.json", JSON.stringify(newProductList), () =>
-    console.log("write file success")
-  );
+  writeToFile(newProductList);
 
   res.status(200).json(newProductList[idx]);
 });
 
-router.delete("/:id", (req, res) => {
-  const id = req.param("id");
+router.delete('/:id', (req, res) => {
+  const id = req.param('id');
   const newProductList = [...productList];
   const idx = newProductList.findIndex((item) => item.id === id);
+
   newProductList.splice(idx, 1);
 
-  fs.writeFileSync("./data/product.json", JSON.stringify(newProductList), () =>
-    console.log("write file success")
-  );
+  writeToFile(newProductList);
 
   res.status(200).json(`Deleted ${id}`);
 });
-
-// router.get("/generate_data", (req, res) => {
-//   let string_data = JSON.stringify(productList);
-
-//   fs.writeFileSync("./data/product.json", string_data, () =>
-//     console.log("write file success")
-//   );
-// });
 
 module.exports = router;
