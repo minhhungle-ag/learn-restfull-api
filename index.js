@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const productRouter = require('./routes/product')
 
 const app = express()
-const port = 4001
+const port = process.env.PORT || 4001
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
